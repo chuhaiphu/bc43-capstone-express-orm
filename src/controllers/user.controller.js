@@ -91,6 +91,28 @@ const saveImage = async (req, res) => {
   }
 };
 
+const unsaveImage = async (req, res) => {
+  try {
+    const { hinh_id } = req.query;
+    const token = req.headers.token;
+    const decodedToken = decodeToken(token);
+    const nguoi_dung_id = decodedToken.data.userId;
+
+    const deletedCount = await model.luu_anh.destroy({
+      where: { nguoi_dung_id, hinh_id }
+    });
+
+    if (deletedCount === 0) {
+      return responseData(404, 'Thất bại', 'Không tìm thấy ảnh đã lưu', null, res);
+    }
+
+    responseData(200, 'Thành công', 'Huỷ lưu ảnh thành công', null, res);
+  } catch (error) {
+    console.error(error);
+    responseData(500, 'Thất bại', 'Lỗi server', null, res);
+  }
+};
+
 const updateUserInfo = async (req, res) => {
   try {
     const { ho_ten, tuoi } = req.body;
@@ -98,22 +120,29 @@ const updateUserInfo = async (req, res) => {
     const decodedToken = decodeToken(token);
     const nguoi_dung_id = decodedToken.data.userId;
 
-    const updatedUser = await model.nguoi_dung.update(
-      { ho_ten, tuoi },
-      { where: { nguoi_dung_id } }
-    );
+    const user = await model.nguoi_dung.findByPk(nguoi_dung_id);
 
-    if (updatedUser[0] === 0) {
+    if (!user) {
       return responseData(404, 'Thất bại', 'Không tìm thấy người dùng', null, res);
     }
 
-    const user = await model.nguoi_dung.findByPk(nguoi_dung_id);
+    // Check if the new data is different from the current data
+    if (user.ho_ten === ho_ten && user.tuoi === tuoi) {
+      return responseData(200, 'Thành công', 'Thông tin người dùng không thay đổi', user, res);
+    }
+
+    // Update user info
+    user.ho_ten = ho_ten;
+    user.tuoi = tuoi;
+    await user.save();
+
     responseData(200, 'Thành công', 'Cập nhật thông tin thành công', user, res);
   } catch (error) {
     console.error(error);
     responseData(500, 'Thất bại', 'Lỗi server', null, res);
   }
 };
+
 
 const updateProfilePicture = async (req, res) => {
   try {
@@ -198,6 +227,7 @@ export {
   getSavedImages,
   getCreatedImages,
   saveImage,
+  unsaveImage,
   updateUserInfo,
   updateProfilePicture,
   changePassword
