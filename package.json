@@ -6,7 +6,8 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
-    "start": "nodemon --env-file=.env  src/server.js"
+    "start": "src/server.js",
+    "dev" : "nodemon --env-file=.env  src/server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
