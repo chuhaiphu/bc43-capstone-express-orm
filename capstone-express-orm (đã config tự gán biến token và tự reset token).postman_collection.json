@@ -1,0 +1,658 @@
+{
+	"info": {
+		"_postman_id": "ffe5e61c-e29b-4d28-82d4-81735b8f9f46",
+		"name": "capstone-express-orm (đã config tự gán biến token và tự reset token)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33178567"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"doanvinhphu666@gmail.com\",\n  \"mat_khau\": \"666\",\n  \"tuoi\": 25,\n  \"ho_ten\": \"Doan Vinh Phu\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{deploy}}/auth/sign-up",
+					"host": [
+						"{{deploy}}"
+					],
+					"path": [
+						"auth",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response is successful and contains a token",
+							"if (pm.response.code === 200 && pm.response.json().content) {",
+							"    // Extract the token from the response",
+							"    var token = pm.response.json().content;",
+							"    ",
+							"    // Set the token as a global variable",
+							"    pm.collectionVariables.set(\"token\", token);",
+							"    ",
+							"    // Log success message",
+							"    console.log(\"Token successfully set for future requests\");",
+							"} else {",
+							"    console.log(\"Login unsuccessful or token not found in response\");",
+							"}",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"doanvinhphu666@gmail.com\",\n    \"mat_khau\" : \"667\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/auth/login",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response is successful and contains a token",
+							"if (pm.response.code === 201 && pm.response.json().content) {",
+							"    // Extract the token from the response",
+							"    var token = pm.response.json().content;",
+							"    ",
+							"    // Set the token as a global variable",
+							"    pm.collectionVariables.set(\"token\", token);",
+							"    ",
+							"    // Log success message",
+							"    console.log(\"Token successfully set for future requests\");",
+							"} else {",
+							"    console.log(\"Login unsuccessful or token not found in response\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/auth/reset-token",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"auth",
+						"reset-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Image",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/doanvinhphu/Pictures/Screenshot 2024-07-03 at 21.12.48.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{localhost}}/image/upload-image",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"upload-image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Image",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{localhost}}/user/save-image?hinh_id=3",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"save-image"
+					],
+					"query": [
+						{
+							"key": "hinh_id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsave Image",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{localhost}}/user/unsave-image?hinh_id=3",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"unsave-image"
+					],
+					"query": [
+						{
+							"key": "hinh_id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tag Image",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tag_names\" : [\"bad-boy\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/image/tag/3",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"tag",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Info (not Avatar)",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ho_ten\" : \"PHU DEP TRA\",\n    \"tuoi\" : 20\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/user/update-info",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"update-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mat_khau_hien_tai\" : \"666\",\n    \"mat_khau_moi\" : \"667\",\n    \"xac_nhan_mat_khau_moi\" : \"667\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/user/change-password",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Avatar",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "anh_dai_dien",
+							"type": "file",
+							"src": "/Users/doanvinhphu/Pictures/Screenshot 2024-08-12 at 12.33.05.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{localhost}}/user/update-profile-picture",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"update-profile-picture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/image",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Images Tags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/image/tag/4",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"tag",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/image/image-detail/4",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"image-detail",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Images by Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/image/search-name",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"search-name"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Comments by Image Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/image/comments/3",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"comments",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Image Saved",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/image/check-saved/3",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"check-saved",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Saved Images by User Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/user/saved-images",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"saved-images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posted Images by User Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}user/created-images",
+					"host": [
+						"{{localhost}}user"
+					],
+					"path": [
+						"created-images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/user/info",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/image/1",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"image",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hinh_id\" : \"3\",\n    \"noi_dung\" : \"aaaa\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/comment",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"comment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Add a pre-request script for all requests to include the token",
+					"pm.request.headers.add({",
+					"    key: \"token\",",
+					"    value: \"{{token}}\"",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "deploy",
+			"value": "https://bc43-capstone-express-orm.onrender.com",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
