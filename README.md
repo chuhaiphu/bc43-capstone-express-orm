@@ -8,9 +8,8 @@
 
 ## Main Features
 
-- **Shareable Image:** Upload your image to platform, view images and search images by categories.
-- **Image Interaction:** Post comments on other users images, download images and save images to view later.
-- **User Interaction:** View other users homepage, what is their uploaded images and save images.
+- **Shareable Image:** Upload your image to platform, view images and search images.
+- **Image Interaction:** Post comments on other users images, download images and like images, tag images.
 For further information, please import the file below to Postman Desktop
 ```shell
 capstone-express-orm (đã config tự gán biến token và tự reset token).postman_collection.json
