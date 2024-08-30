@@ -1,6 +1,6 @@
 <div align="center">
   <h1 align="center">ExpressJS APIs for Image Sharing platform</h1>
-  <h3>The image sharing platform</h3>
+  <h3>Backend Stack for the image sharing platform</h3>
 
 </div>
 
