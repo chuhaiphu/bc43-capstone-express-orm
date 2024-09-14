@@ -2,10 +2,6 @@
   <h1 align="center">ExpressJS APIs for Image Sharing platform</h1>
   <h3>Backend Stack for the image sharing platform</h3>
   <br>
-  This url is for testing only
-  <br>
-  Please wait at least 60 seconds for the first time request after idle
-  <h4>https://bc43-capstone-express-orm.onrender.com</h4>
 </div>
 
 <br/>
